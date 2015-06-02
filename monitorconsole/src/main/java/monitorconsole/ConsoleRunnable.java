@@ -1,32 +1,31 @@
 package monitorconsole;
-
-
+import java.util.*;
 public class ConsoleRunnable implements Runnable {
 	
-	static Integer i = 0;
+	static Integer counter = 0;
+	private ConsoleUI ui;
+	Random generator = new Random();
+	 
+	public ConsoleRunnable(ConsoleUI ui) {
+		this.ui = ui;
+	}
 	
 	public void run() {
 					
-		//	i++;
-		//System.out.print("" + i.toString() + " host1\r");
-		
-		try
-		{
-			for (int j = 0; j < 10; j++) {
-	            System.out.print("\rThinking... " + j);
-	            System.out.flush();
-	            Thread.sleep(100);
-	        }
-		}
-		catch(InterruptedException e)
-		{
-			e.printStackTrace();
-		}
-		
-		//System.out.print("" + i.toString() + " host2\r\n");
-		//System.out.print("" + i.toString() + " host3\r\n");
-		//System.out.print("" + i.toString() + " host4\r\n");
-		
+		counter++;
+		ui.print
+		(
+			"Machine" + "\t" + "step" + "\t" + "CPU" + "\t" + "Mem" + "\n" +
+			"host1" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host2" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host3" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host4" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host5" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host6" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host7" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host8" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host9" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n" +
+			"host10" + "\t" + counter.toString() + "\t" + generator.nextInt(100) +"%" + "\t" + generator.nextInt(100) + "%" + "\n"
+		);
 	}
-
 }
