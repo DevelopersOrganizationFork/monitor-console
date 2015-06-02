@@ -4,7 +4,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import monitorconsole.ConsoleRunnable;
+import java.awt.EventQueue;
+//import monitorconsole.ConsoleRunnable;
 
 
 public class ConsoleClient {
