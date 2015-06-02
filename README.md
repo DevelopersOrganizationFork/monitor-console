@@ -1,2 +1,5 @@
 # monitor-console
-monitor-console
+
+mvn clean install test
+
+
