@@ -51,7 +51,7 @@ public class ConsoleRunnable implements Runnable {
 	    	jsonValues.add(jsonArray.getJSONObject(i));
 	    }
 	    
-	    Collections.sort(jsonValues, new JSONComparator(ui.getCurrentSortType()));
+	    Collections.sort(jsonValues, new JSONComparator(ui.getCurrentSortType(), ui.getCurrentSortKey()));
 	    	
 	    JSONArray  res = new JSONArray();
 	    for (Object o : jsonValues){

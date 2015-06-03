@@ -59,13 +59,13 @@ public class ConsoleUI extends JFrame {
     		measurementTypeGroup.add(button);
     	
     	sortByHostName = new JRadioButton("by host name");
-    	sortByHostName.setActionCommand("by host name");
+    	sortByHostName.setActionCommand("hostName");
     	sortByHostIp = new JRadioButton("by host IP");
-    	sortByHostIp.setActionCommand("by host IP");
+    	sortByHostIp.setActionCommand("hostIp");
     	sortByMeasurement = new JRadioButton("by measurement");
-    	sortByMeasurement.setActionCommand("by measurement");
+    	sortByMeasurement.setActionCommand("measurementValue");
     	sortByMeasurement.setSelected(true);
-    	currentSortKey = "by measurement";
+    	currentSortKey = "measurementValue";
     	
     	sortByHostName.addActionListener(actionListener);
     	sortByHostIp.addActionListener(actionListener);

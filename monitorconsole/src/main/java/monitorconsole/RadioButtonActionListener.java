@@ -19,7 +19,7 @@ public class RadioButtonActionListener implements ActionListener {
 			ui.setcurrentMeasurementType(actionValue);
 		else if (actionValue.equals("ascending") || actionValue.equals("descending"))
 			ui.setcurrentSortType(actionValue);
-		else if(actionValue.equals("by host name") || actionValue.equals("by host IP") || actionValue.equals("by measurement"))
+		else if(actionValue.equals("hostName") || actionValue.equals("hostIp") || actionValue.equals("measurementValue"))
 			ui.setcurrentSortKey(actionValue);
     }
 }
