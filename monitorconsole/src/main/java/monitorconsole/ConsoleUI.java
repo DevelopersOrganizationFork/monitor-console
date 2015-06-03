@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class ConsoleUI extends JFrame implements ActionListener {
+public class ConsoleUI extends JFrame {
 
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
@@ -15,6 +15,8 @@ public class ConsoleUI extends JFrame implements ActionListener {
 	private JRadioButton downButton;
 	
 	private String currentMeasurementType;
+	private String currentSortType;
+	private String currentSortKey;
 	
 	private JRadioButton sortByHostName;
 	private JRadioButton sortByHostIp;
@@ -32,6 +34,7 @@ public class ConsoleUI extends JFrame implements ActionListener {
     	textArea.setFont(new Font("monospaced", Font.PLAIN, 12));
     	textArea.setEditable(false);
     	scrollPane = new JScrollPane(textArea); 
+    	RadioButtonActionListener actionListener = new RadioButtonActionListener(this);
     	
     	cpuButton = new JRadioButton("CPU");
     	cpuButton.setActionCommand("CPU");
@@ -41,14 +44,13 @@ public class ConsoleUI extends JFrame implements ActionListener {
     	upButton.setActionCommand("Network Up");
     	downButton = new JRadioButton("Network Down");
     	downButton.setActionCommand("Network Down");
-
     	cpuButton.setSelected(true);
     	currentMeasurementType = "CPU";
     	
-    	cpuButton.addActionListener(this);
-    	memButton.addActionListener(this);
-    	upButton.addActionListener(this);
-    	downButton.addActionListener(this);
+    	cpuButton.addActionListener(actionListener);
+    	memButton.addActionListener(actionListener);
+    	upButton.addActionListener(actionListener);
+    	downButton.addActionListener(actionListener);
     	
     	JRadioButton[] measurementTypeButtons = {cpuButton,memButton,upButton,downButton};
     	ButtonGroup measurementTypeGroup = new ButtonGroup();
@@ -63,6 +65,11 @@ public class ConsoleUI extends JFrame implements ActionListener {
     	sortByMeasurement = new JRadioButton("by measurement");
     	sortByMeasurement.setActionCommand("by measurement");
     	sortByMeasurement.setSelected(true);
+    	currentSortKey = "by measurement";
+    	
+    	sortByHostName.addActionListener(actionListener);
+    	sortByHostIp.addActionListener(actionListener);
+    	sortByMeasurement.addActionListener(actionListener);
     	
     	JRadioButton[] sortKeyButtons = {sortByHostName,sortByHostIp,sortByMeasurement};
     	ButtonGroup sortKeyGroup = new ButtonGroup();
@@ -75,6 +82,10 @@ public class ConsoleUI extends JFrame implements ActionListener {
     	sortDescending = new JRadioButton("descending");
     	sortDescending.setActionCommand("descending");
     	sortDescending.setSelected(true);
+    	currentSortType = "descending";
+    	
+    	sortAscending.addActionListener(actionListener);
+    	sortDescending.addActionListener(actionListener);
     	
     	JRadioButton[] sortTypeButtons = {sortAscending,sortDescending};
     	ButtonGroup sortTypeGroup = new ButtonGroup();
@@ -129,12 +140,29 @@ public class ConsoleUI extends JFrame implements ActionListener {
         pack();        
     }
     
-    public void actionPerformed(ActionEvent actionEvent) {
-    	currentMeasurementType = actionEvent.getActionCommand();
+    
+    public void setcurrentMeasurementType(String measurementType) {
+    	currentMeasurementType = measurementType;
+    }
+    
+    public void setcurrentSortKey(String sortKey) {
+    	currentSortKey = sortKey;
+    }
+    
+    public void setcurrentSortType(String sortType) {
+    	currentSortType = sortType;
     }
     
     public String getCurrentMeasurementType() {
     	return currentMeasurementType;
+    }
+    
+    public String getCurrentSortKey() {
+    	return currentSortKey;
+    }
+    
+    public String getCurrentSortType() {
+    	return currentSortType;
     }
     
     public void print(String text) {

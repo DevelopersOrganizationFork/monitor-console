@@ -4,15 +4,23 @@ import org.json.*;
 
 public class JSONComparator implements Comparator<JSONObject>
 {
-    public int compare(JSONObject a, JSONObject b)
-    {
+	private String sortType;
+	
+	public JSONComparator(String sortType) {
+		this.sortType = sortType;
+	}
+	
+    public int compare(JSONObject a, JSONObject b) {
         int valA = a.getInt("measurementValue");
         int valB = b.getInt("measurementValue");
 
+        int result = 0;
+        
         if(valA > valB)
-            return -1;
+           result = -1;
         if(valA < valB)
-            return 1;
-        return 0;    
+           result = 1;
+        
+        return sortType.equals("descending") ? result : -result;
     }
 }
