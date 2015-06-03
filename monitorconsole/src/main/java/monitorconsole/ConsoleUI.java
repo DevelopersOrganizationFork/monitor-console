@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class ConsoleUI extends JFrame {
+public class ConsoleUI extends JFrame implements ActionListener {
 
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
@@ -12,6 +12,7 @@ public class ConsoleUI extends JFrame {
 	private JRadioButton memButton;
 	private JRadioButton upButton;
 	private JRadioButton downButton;
+	private String currentMeasurementType;
 	
     public ConsoleUI() {
         initUI();
@@ -28,6 +29,7 @@ public class ConsoleUI extends JFrame {
     	cpuButton.setMnemonic(KeyEvent.VK_LEFT);
     	cpuButton.setActionCommand("CPU");
     	cpuButton.setSelected(true);
+    	currentMeasurementType = "CPU";
 
     	memButton = new JRadioButton("Memory");
     	memButton.setMnemonic(KeyEvent.VK_RIGHT);
@@ -40,6 +42,11 @@ public class ConsoleUI extends JFrame {
     	downButton = new JRadioButton("Network Down");
     	downButton.setMnemonic(KeyEvent.VK_DOWN);
     	downButton.setActionCommand("Network Down");
+    	
+    	cpuButton.addActionListener(this);
+    	memButton.addActionListener(this);
+    	upButton.addActionListener(this);
+    	downButton.addActionListener(this);
     	
     	JRadioButton[] buttons = {cpuButton,memButton,upButton,downButton};
     	ButtonGroup group = new ButtonGroup();
@@ -68,6 +75,14 @@ public class ConsoleUI extends JFrame {
         pane.add(controlsPane, BorderLayout.NORTH);
         pane.add(scrollPane, BorderLayout.SOUTH);
         pack();        
+    }
+    
+    public void actionPerformed(ActionEvent actionEvent) {
+    	currentMeasurementType = actionEvent.getActionCommand();
+    }
+    
+    public String getCurrentMeasurementType() {
+    	return currentMeasurementType;
     }
     
     public void print(String text) {
