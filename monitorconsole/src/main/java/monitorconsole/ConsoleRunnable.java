@@ -46,8 +46,20 @@ public class ConsoleRunnable implements Runnable {
 				
 	    final JSONArray jsonArray = obj.getJSONArray("measurements");
 	    
+	    List<JSONObject> jsonValues = new ArrayList<JSONObject>();
 	    for (int i = 0; i < jsonArray.length(); ++i) {
-	    	final JSONObject singleMeasurement = jsonArray.getJSONObject(i);
+	    	jsonValues.add(jsonArray.getJSONObject(i));
+	    }
+	    
+	    Collections.sort(jsonValues,new JSONComparator());
+	    	
+	    JSONArray  res = new JSONArray();
+	    for (Object o : jsonValues){
+	      res.put(o);
+	    }
+	   
+	    for (int i = 0; i < res.length(); ++i) {
+	    	final JSONObject singleMeasurement = res.getJSONObject(i);
 		      
 		      String hostName = String.format("%-20s", singleMeasurement.getString("hostName"));
 		      String hostIp = String.format("%-20s", singleMeasurement.getString("hostIp"));

@@ -8,11 +8,17 @@ public class ConsoleUI extends JFrame implements ActionListener {
 
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
+	
 	private JRadioButton cpuButton;
 	private JRadioButton memButton;
 	private JRadioButton upButton;
 	private JRadioButton downButton;
+	
 	private String currentMeasurementType;
+	
+	private JRadioButton sortByHostName;
+	private JRadioButton sortByHostIp;
+	private JRadioButton sortByMeasurement;
 	
     public ConsoleUI() {
         initUI();
@@ -26,17 +32,14 @@ public class ConsoleUI extends JFrame implements ActionListener {
     	textArea.setEditable(false);
     	
     	cpuButton = new JRadioButton("CPU");
-    	cpuButton.setMnemonic(KeyEvent.VK_LEFT);
     	cpuButton.setActionCommand("CPU");
     	cpuButton.setSelected(true);
     	currentMeasurementType = "CPU";
 
     	memButton = new JRadioButton("Memory");
-    	memButton.setMnemonic(KeyEvent.VK_RIGHT);
     	memButton.setActionCommand("Memory");
 
     	upButton = new JRadioButton("Network Up");
-    	upButton.setMnemonic(KeyEvent.VK_UP);
     	upButton.setActionCommand("Network Up");
     	
     	downButton = new JRadioButton("Network Down");
