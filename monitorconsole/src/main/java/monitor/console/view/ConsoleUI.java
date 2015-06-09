@@ -8,32 +8,33 @@ public class ConsoleUI extends JFrame {
 
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
-	
-	private JRadioButton cpuButton;
-	private JRadioButton memButton;
-	private JRadioButton upButton;
-	private JRadioButton downButton;
-	
-	private String currentMeasurementType;
-	private String currentSortType;
-	private String currentSortKey;
-	
-	private JRadioButton sortByHostName;
-	private JRadioButton sortByHostIp;
-	private JRadioButton sortByMeasurement;
-	
-	private JRadioButton sortAscending;
-	private JRadioButton sortDescending;
+	private JRadioButton cpuButton, memButton, upButton, downButton;
+	private JRadioButton sortByHostName, sortByHostIp, sortByMeasurement;
+	private JRadioButton sortAscending, sortDescending;
+	private String currentMeasurementType, currentSortType, currentSortKey;
+	private JRadioButton[] measurementTypeButtons, sortKeyButtons, sortTypeButtons;
 	
     public ConsoleUI() {
         initUI();
     }
-
+    
     private void initUI() {
     	textArea = new JTextArea(13, 60);
     	textArea.setFont(new Font("monospaced", Font.PLAIN, 12));
     	textArea.setEditable(false);
     	scrollPane = new JScrollPane(textArea); 
+    	
+    	initMeasurementButtons();
+    	initSortButtons();
+    	createLayout(scrollPane, measurementTypeButtons, sortKeyButtons, sortTypeButtons); 
+        
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("Monitor console");
+        //setSize(600, 300);
+    }
+    
+    private void initMeasurementButtons() {
     	RadioButtonActionListener actionListener = new RadioButtonActionListener(this);
     	
     	cpuButton = new JRadioButton("CPU");
@@ -52,11 +53,15 @@ public class ConsoleUI extends JFrame {
     	upButton.addActionListener(actionListener);
     	downButton.addActionListener(actionListener);
     	
-    	JRadioButton[] measurementTypeButtons = {cpuButton,memButton,upButton,downButton};
+    	measurementTypeButtons = new JRadioButton[]{cpuButton,memButton,upButton,downButton};
     	ButtonGroup measurementTypeGroup = new ButtonGroup();
     	
     	for(JRadioButton button : measurementTypeButtons)
     		measurementTypeGroup.add(button);
+    }
+    
+    private void initSortButtons() {
+    	RadioButtonActionListener actionListener = new RadioButtonActionListener(this);
     	
     	sortByHostName = new JRadioButton("by host name");
     	sortByHostName.setActionCommand("hostName");
@@ -71,7 +76,7 @@ public class ConsoleUI extends JFrame {
     	sortByHostIp.addActionListener(actionListener);
     	sortByMeasurement.addActionListener(actionListener);
     	
-    	JRadioButton[] sortKeyButtons = {sortByHostName,sortByHostIp,sortByMeasurement};
+    	sortKeyButtons = new JRadioButton[]{sortByHostName,sortByHostIp,sortByMeasurement};
     	ButtonGroup sortKeyGroup = new ButtonGroup();
     	
     	for(JRadioButton button : sortKeyButtons)
@@ -87,18 +92,11 @@ public class ConsoleUI extends JFrame {
     	sortAscending.addActionListener(actionListener);
     	sortDescending.addActionListener(actionListener);
     	
-    	JRadioButton[] sortTypeButtons = {sortAscending,sortDescending};
+    	sortTypeButtons = new JRadioButton[]{sortAscending,sortDescending};
     	ButtonGroup sortTypeGroup = new ButtonGroup();
     	
     	for(JRadioButton button : sortTypeButtons)
     		sortTypeGroup.add(button);
-    	
-    	createLayout(scrollPane, measurementTypeButtons, sortKeyButtons, sortTypeButtons); 
-        
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Monitor console");
-        //setSize(600, 300);
     }
     
     private void createLayout(JScrollPane scrollPane, JRadioButton[] measurementTypeButtons, JRadioButton[] sortKeyButtons, JRadioButton[] sortTypeButtons) {
@@ -140,17 +138,16 @@ public class ConsoleUI extends JFrame {
         pack();        
     }
     
-    
-    public void setcurrentMeasurementType(String measurementType) {
-    	currentMeasurementType = measurementType;
+    public void setcurrentMeasurementType(String currentMeasurementType) {
+    	this.currentMeasurementType = currentMeasurementType;
     }
     
-    public void setcurrentSortKey(String sortKey) {
-    	currentSortKey = sortKey;
+    public void setcurrentSortKey(String currentSortKey) {
+    	this.currentSortKey = currentSortKey;
     }
     
-    public void setcurrentSortType(String sortType) {
-    	currentSortType = sortType;
+    public void setcurrentSortType(String currentSortType) {
+    	this.currentSortType = currentSortType;
     }
     
     public String getCurrentMeasurementType() {
