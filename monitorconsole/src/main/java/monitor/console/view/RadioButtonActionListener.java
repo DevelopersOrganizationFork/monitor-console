@@ -1,4 +1,5 @@
-package monitorconsole;
+package monitor.console.view;
+import monitor.console.view.ConsoleUI;
 import java.awt.*;
 import java.awt.event.*;
 

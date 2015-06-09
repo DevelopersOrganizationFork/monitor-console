@@ -1,4 +1,7 @@
-package monitorconsole;
+package monitor.console.control;
+import monitor.console.data.JSONComparator;
+import monitor.console.data.JSONmock;
+import monitor.console.view.ConsoleUI;
 import java.util.*;
 import org.json.*;
 

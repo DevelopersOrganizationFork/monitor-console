@@ -1,4 +1,4 @@
-package monitorconsole; 
+package monitor.console.data; 
 import java.util.*;
 import org.json.*;
 

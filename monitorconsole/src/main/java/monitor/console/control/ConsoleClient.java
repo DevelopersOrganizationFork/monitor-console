@@ -1,5 +1,6 @@
-package monitorconsole;
+package monitor.console.control;
 
+import monitor.console.view.ConsoleUI;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

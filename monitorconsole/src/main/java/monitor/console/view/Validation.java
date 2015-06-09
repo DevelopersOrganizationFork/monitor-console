@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package monitorconsole;
+package monitor.console.view;
 
+import monitor.console.view.NewAccount;
 import java.awt.Color;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
