@@ -23,6 +23,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class HTTPRequest {
 
+    private boolean userExist = false;
+    private String resp = null;
     public HTTPRequest(String login, byte[] password) throws UnsupportedEncodingException, IOException {
 
         HttpClient client = new DefaultHttpClient();
@@ -31,9 +33,19 @@ public class HTTPRequest {
         input.setContentType("application/json");
         HttpResponse response = client.execute(post);
         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-        String line = " ";
-        while ((line = rd.readLine()) != null) {
-            System.out.println(line);
+        
+        while ((resp = rd.readLine()) != null) {
+            System.out.println(resp);
+        }
+        if(resp != null){
+            userExist = true;
         }
     }
+    public boolean getUserExist(){
+        return userExist;
+    }
+    public String getResp(){
+        return resp;
+    }
+    
 }

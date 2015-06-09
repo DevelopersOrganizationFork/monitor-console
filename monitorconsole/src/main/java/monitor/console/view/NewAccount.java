@@ -198,8 +198,12 @@ public class NewAccount extends JFrame {
             System.out.println("Zakodowane to MD5 " + md.digest(bytesOfMessage));
             //Wystaw resta z haslem i loginem
             //Na razie komentarz dopoki nie zrobimy resta
-            //HTTPRequest ob = new HTTPRequest(jLogin.getText(), md.digest(bytesOfMessage));
-
+            HTTPRequest ob = new HTTPRequest(jLogin.getText(), md.digest(bytesOfMessage));
+            if (ob.getUserExist()) {
+                JOptionPane.showMessageDialog(null, "Failed to register a user");
+            } else {
+                JOptionPane.showMessageDialog(null, "User registered");
+            }
             //Zapisz do bazy i zamknij okno jak sprawdzisz ze wszystko ok
             dispose();
         } else {
