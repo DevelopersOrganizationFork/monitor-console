@@ -28,12 +28,13 @@ public class HTTPRequest {
     public HTTPRequest(String login, byte[] password) throws UnsupportedEncodingException, IOException {
 
         HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("http://localhost:18080/monitor-back/rest/");
+        HttpPost post = new HttpPost("http://localhost:18080/monitor-back/rest/hello");
         StringEntity input = new StringEntity("{\'login\':"+"\'"+login+"\',\'password\':\'"+Arrays.toString(password)+"\'}");
         input.setContentType("application/json");
+        post.setEntity(input);
         HttpResponse response = client.execute(post);
         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-        
+                              
         while ((resp = rd.readLine()) != null) {
             System.out.println(resp);
         }
