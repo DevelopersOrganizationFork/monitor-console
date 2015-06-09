@@ -199,7 +199,7 @@ public class NewAccount extends JFrame {
             //Wystaw resta z haslem i loginem
             //Na razie komentarz dopoki nie zrobimy resta
             HTTPRequest ob = new HTTPRequest(jLogin.getText(), md.digest(bytesOfMessage));
-            if (ob.getUserExist()) {
+            if (!ob.getUserExist()) {
                 JOptionPane.showMessageDialog(null, "Failed to register a user");
             } else {
                 JOptionPane.showMessageDialog(null, "User registered");
