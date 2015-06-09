@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,13 +30,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import monitor.console.control.HTTPRequest;
 
 public class NewAccount extends JFrame {
 
     private void addButtonsListeners(JButton jButton1, JButton jButton2) {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +139,11 @@ public class NewAccount extends JFrame {
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -157,7 +167,7 @@ public class NewAccount extends JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         if (!Validation.isLoginProper(jLogin)) {
             JOptionPane.showMessageDialog(null, "Please update required login field");
             return;
@@ -170,8 +180,26 @@ public class NewAccount extends JFrame {
             JOptionPane.showMessageDialog(null, "The password must contain 8 characters (including at least one special character, one number and capital letter)");
             return;
         }
-        if (!Validation.checkIfPasswordsMatches(jPasswordField1, jPasswordField2)) {
-            System.out.println("Wszystko ok haslo zakodowane!");
+        if (Arrays.equals(jPasswordField1.getPassword(), jPasswordField2.getPassword())) {
+            System.out.println("Wszystko ok haslo do zakodowania!");
+
+            byte[] bytesOfMessage = null;
+            try {
+                bytesOfMessage = Arrays.toString(jPasswordField1.getPassword()).getBytes("UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Zakodowane to MD5 " + md.digest(bytesOfMessage));
+            //Wystaw resta z haslem i loginem
+            //Na razie komentarz dopoki nie zrobimy resta
+            //HTTPRequest ob = new HTTPRequest(jLogin.getText(), md.digest(bytesOfMessage));
+
             //Zapisz do bazy i zamknij okno jak sprawdzisz ze wszystko ok
             dispose();
         } else {

@@ -64,25 +64,5 @@ public class Validation {
         }
         return true;
     }
-
-    static public boolean checkIfPasswordsMatches(JPasswordField jPasswordField1, JPasswordField jPasswordField2) {
-        if (Arrays.equals(jPasswordField1.getPassword(), jPasswordField2.getPassword())) {
-            //zakoduj md5 i wystaw RESTA
-            byte[] bytesOfMessage = null;
-            try {
-                bytesOfMessage = Arrays.toString(jPasswordField1.getPassword()).getBytes("UTF-8");
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            MessageDigest md = null;
-            try {
-                md = MessageDigest.getInstance("MD5");
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Zakodowane to MD5 " + md.digest(bytesOfMessage));
-            return false;
-        }
-        return true;
-    }
 }
+
