@@ -3,6 +3,6 @@ Modul odpowiedzialny za autoryzacje uzytkonika, rejestracje nowego oraz wyswietl
 
 
 mvn clean install 
-mvn exec:java -Dexec.mainClass="com.example.Main"
+mvn exec:java -Dexec.mainClass="monitor.console.view.MainWindow"
 
 
