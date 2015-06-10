@@ -186,7 +186,7 @@ public class NewAccount extends JFrame {
             return;
         }
         if (!Validation.ifStrongPassword(jPasswordField1)) {
-            JOptionPane.showMessageDialog(null, "The password must contain 8 characters (including at least one special character, one number and capital letter)");
+            JOptionPane.showMessageDialog(null, "The password must contain 8 characters");
             return;
         }
         if (Arrays.equals(jPasswordField1.getPassword(), jPasswordField2.getPassword())) {
