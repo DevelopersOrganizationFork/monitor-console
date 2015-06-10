@@ -12,9 +12,18 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import monitor.console.control.ConsoleClient;
+import monitor.console.control.FindUrl;
+import monitor.console.control.HTTPRequest;
 
 /**
  *
@@ -68,7 +77,11 @@ public final class MainWindow extends javax.swing.JFrame {
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -151,7 +164,7 @@ public final class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         //Sprawdz czy doszlo do poprawnego zalogowania jesli tak otworzyc czesc przygotowana przez Mateusza
         //dopisac weryfikcja z RESTEM wystawionym przez Sebe na razie dziala tak jakbys sie poprawnie zalogowal
         if (!Validation.isLoginProper(jTextField2)) {
@@ -162,6 +175,32 @@ public final class MainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please update required password field");
             return;
         }
+        byte[] bytesOfMessage = null;
+            try {
+                bytesOfMessage = Arrays.toString(jPasswordField1.getPassword()).getBytes("UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Zakodowane to MD5 " + md.digest(bytesOfMessage));
+            
+        HTTPRequest loginStatus = new HTTPRequest(jTextField2.getText(), md.digest(bytesOfMessage),new FindUrl("loginHost", "loginPort", "loginRestServiceName"));
+        switch (loginStatus.getResp()) {
+                case LOGIN_OK:
+                    JOptionPane.showMessageDialog(null, "Succesfull login");
+                    break;
+                case LOGIN_FAILED:
+                    JOptionPane.showMessageDialog(null, "Login failed, please try again");
+                    break;
+                default: 
+                    JOptionPane.showMessageDialog(null, "Something went wrong");
+            }
+        //zanim wywolasz konsole przechwycic info od seby co ma byc wyswietlone
         ConsoleClient console = new ConsoleClient();
         console.start();
     }

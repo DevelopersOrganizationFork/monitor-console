@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import monitor.console.view.NewAccount.StatusInfo;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -20,33 +21,30 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *
  * @author akis
  */
-
 public class HTTPRequest {
 
-    private boolean userExist = false;
-    private String resp = null;
-    public HTTPRequest(String login, byte[] password) throws UnsupportedEncodingException, IOException {
+    private StatusInfo resp = null;
+
+    public HTTPRequest(String login, byte[] password, FindUrl url) throws UnsupportedEncodingException, IOException {
 
         HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("http://localhost:18080/monitor-back/rest/hello");
-        StringEntity input = new StringEntity("{\'login\':"+"\'"+login+"\',\'password\':\'"+Arrays.toString(password)+"\'}");
+        System.out.println(url.getHostName() + ":" + url.getPortNumber() + "/" + url.getRestServiceName());
+        HttpPost post = new HttpPost(url.getHostName() + ":" + url.getPortNumber() + "/" + url.getRestServiceName());
+        StringEntity input = new StringEntity("{\'login\':" + "\'" + login + "\',\'password\':\'" + Arrays.toString(password) + "\'}");
         input.setContentType("application/json");
         post.setEntity(input);
         HttpResponse response = client.execute(post);
         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                              
-        while ((resp = rd.readLine()) != null) {
+        String tmp = "";
+        while (( tmp = rd.readLine()) != null) {
+            resp = StatusInfo.valueOf(tmp);
             System.out.println(resp);
         }
-        if(resp != null){
-            userExist = true;
-        }
+
     }
-    public boolean getUserExist(){
-        return userExist;
-    }
-    public String getResp(){
+
+    public StatusInfo getResp() {
         return resp;
     }
-    
+
 }

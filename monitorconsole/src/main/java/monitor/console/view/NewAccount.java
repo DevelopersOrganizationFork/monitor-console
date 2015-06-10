@@ -30,9 +30,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import monitor.console.control.FindUrl;
 import monitor.console.control.HTTPRequest;
 
 public class NewAccount extends JFrame {
+
+    public enum StatusInfo {
+
+        REGISTATION_OK,
+        REGISTRATION_FAILED,
+        LOGIN_OK,
+        LOGIN_FAILED;
+    }
 
     private void addButtonsListeners(JButton jButton1, JButton jButton2) {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -196,16 +205,18 @@ public class NewAccount extends JFrame {
                 Logger.getLogger(NewAccount.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.println("Zakodowane to MD5 " + md.digest(bytesOfMessage));
-            //Wystaw resta z haslem i loginem
-            //Na razie komentarz dopoki nie zrobimy resta
-            HTTPRequest ob = new HTTPRequest(jLogin.getText(), md.digest(bytesOfMessage));
-            if (!ob.getUserExist()) {
-                JOptionPane.showMessageDialog(null, "Failed to register a user");
-            } else {
-                JOptionPane.showMessageDialog(null, "User registered");
+            HTTPRequest registerStatus = new HTTPRequest(jLogin.getText(), md.digest(bytesOfMessage), new FindUrl("registerHost", "registerPort", "registerRestServiceName"));
+            switch (registerStatus.getResp()) {
+                case REGISTATION_OK:
+                    JOptionPane.showMessageDialog(null, "User registered");
+                    dispose();
+                    break;
+                case REGISTRATION_FAILED:
+                    JOptionPane.showMessageDialog(null, "Registration Failed");
+                    break;
+                default: 
+                    JOptionPane.showMessageDialog(null, "Something went wrong");
             }
-            //Zapisz do bazy i zamknij okno jak sprawdzisz ze wszystko ok
-            dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Passwords do not match!");
         }
