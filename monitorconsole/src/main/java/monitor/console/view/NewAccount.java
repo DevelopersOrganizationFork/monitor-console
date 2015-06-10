@@ -211,7 +211,7 @@ public class NewAccount extends JFrame {
             {
             	JOptionPane.showMessageDialog(null, "User registered");
                 dispose();
-            }
+            } 
             else if(registerStatus.getResp().equals("REGISTRATION_FAILED"))
             	JOptionPane.showMessageDialog(null, "Registration Failed");
             else

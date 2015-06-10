@@ -200,7 +200,7 @@ public final class MainWindow extends javax.swing.JFrame {
         
         //zanim wywolasz konsole przechwycic info od seby co ma byc wyswietlone
         ConsoleClient console = new ConsoleClient();
-        console.start();
+        console.start(); 
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {

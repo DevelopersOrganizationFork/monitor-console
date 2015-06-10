@@ -38,7 +38,7 @@ public class HTTPRequest {
         String tmp = "";
         while (( tmp = rd.readLine()) != null) {
         	resp = tmp.replaceAll("\"", "");
-            System.out.println(resp);
+            System.out.println(resp); 
         }
     }
 
