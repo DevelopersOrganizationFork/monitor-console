@@ -206,17 +206,16 @@ public class NewAccount extends JFrame {
             }
             System.out.println("Zakodowane to MD5 " + md.digest(bytesOfMessage));
             HTTPRequest registerStatus = new HTTPRequest(jLogin.getText(), md.digest(bytesOfMessage), new FindUrl("registerHost", "registerPort", "registerRestServiceName"));
-            switch (registerStatus.getResp()) {
-                case REGISTATION_OK:
-                    JOptionPane.showMessageDialog(null, "User registered");
-                    dispose();
-                    break;
-                case REGISTRATION_FAILED:
-                    JOptionPane.showMessageDialog(null, "Registration Failed");
-                    break;
-                default: 
-                    JOptionPane.showMessageDialog(null, "Something went wrong");
+            
+            if(registerStatus.getResp().equals("REGISTATION_OK"))
+            {
+            	JOptionPane.showMessageDialog(null, "User registered");
+                dispose();
             }
+            else if(registerStatus.getResp().equals("REGISTRATION_FAILED"))
+            	JOptionPane.showMessageDialog(null, "Registration Failed");
+            else
+            	JOptionPane.showMessageDialog(null, "Something went wrong");
         } else {
             JOptionPane.showMessageDialog(null, "Passwords do not match!");
         }

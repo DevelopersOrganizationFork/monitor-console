@@ -23,28 +23,26 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class HTTPRequest {
 
-    private StatusInfo resp = null;
+    private String resp = null;
 
     public HTTPRequest(String login, byte[] password, FindUrl url) throws UnsupportedEncodingException, IOException {
 
         HttpClient client = new DefaultHttpClient();
         System.out.println(url.getHostName() + ":" + url.getPortNumber() + "/" + url.getRestServiceName());
         HttpPost post = new HttpPost(url.getHostName() + ":" + url.getPortNumber() + "/" + url.getRestServiceName());
-        StringEntity input = new StringEntity("{\'login\':" + "\'" + login + "\',\'password\':\'" + Arrays.toString(password) + "\'}");
+        StringEntity input = new StringEntity("{\"login\":" + "\"" + login + "\",\"password\":\"" + Arrays.toString(password) + "\"}");
         input.setContentType("application/json");
         post.setEntity(input);
         HttpResponse response = client.execute(post);
         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
         String tmp = "";
         while (( tmp = rd.readLine()) != null) {
-            resp = StatusInfo.valueOf(tmp);
+        	resp = tmp.replaceAll("\"", "");
             System.out.println(resp);
         }
-
     }
 
-    public StatusInfo getResp() {
+    public String getResp() {
         return resp;
     }
-
 }

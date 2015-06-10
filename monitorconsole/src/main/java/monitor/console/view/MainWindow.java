@@ -190,16 +190,14 @@ public final class MainWindow extends javax.swing.JFrame {
             System.out.println("Zakodowane to MD5 " + md.digest(bytesOfMessage));
             
         HTTPRequest loginStatus = new HTTPRequest(jTextField2.getText(), md.digest(bytesOfMessage),new FindUrl("loginHost", "loginPort", "loginRestServiceName"));
-        switch (loginStatus.getResp()) {
-                case LOGIN_OK:
-                    JOptionPane.showMessageDialog(null, "Succesfull login");
-                    break;
-                case LOGIN_FAILED:
-                    JOptionPane.showMessageDialog(null, "Login failed, please try again");
-                    break;
-                default: 
-                    JOptionPane.showMessageDialog(null, "Something went wrong");
-            }
+        
+        if(loginStatus.getResp().equals("LOGIN_OK"))
+        	JOptionPane.showMessageDialog(null, "Succesfull login");
+        else if(loginStatus.getResp().equals("LOGIN_FAILED"))
+        	JOptionPane.showMessageDialog(null, "Login failed, please try again");
+        else
+        	JOptionPane.showMessageDialog(null, "Something went wrong");
+        
         //zanim wywolasz konsole przechwycic info od seby co ma byc wyswietlone
         ConsoleClient console = new ConsoleClient();
         console.start();
