@@ -14,13 +14,14 @@ public class JSONComparator implements Comparator<JSONObject>
 	
     public int compare(JSONObject a, JSONObject b) {
     	
-    	int intA, intB, result = 0;
+    	double intA, intB;
+    	int result = 0;
     	String valA, valB;
         
     	if(sortKey.equals("measurementValue"))
     	{
-    		intA = a.getInt(sortKey);
-    		intB = b.getInt(sortKey);
+    		intA = a.getDouble(sortKey);
+    		intB = b.getDouble(sortKey);
     		
     	    if(intA > intB)
     	    	result = 1;

@@ -19,7 +19,7 @@ public class ConsoleUI extends JFrame {
     }
     
     private void initUI() {
-    	textArea = new JTextArea(13, 60);
+    	textArea = new JTextArea(13, 70);
     	textArea.setFont(new Font("monospaced", Font.PLAIN, 12));
     	textArea.setEditable(false);
     	scrollPane = new JScrollPane(textArea); 

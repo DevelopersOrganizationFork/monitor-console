@@ -6,6 +6,7 @@ Modu³ odpowiedzialny za autoryzacje u¿ytkownika, rejestracje nowego oraz wyœwiet
 
 ## Instalacja
 ant version >= 1.8.2
+`ant install`
 
 * `install.properties` - plik konfiguracyjny, mo¿na w nim ustawiæ: 
 

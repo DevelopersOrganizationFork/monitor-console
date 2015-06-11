@@ -2,6 +2,7 @@ package monitor.console.control;
 import monitor.console.data.JSONManager;
 import monitor.console.view.ConsoleUI;
 import org.json.*;
+import java.io.*;
 
 public class ConsoleRunnable implements Runnable {
 	
@@ -15,9 +16,14 @@ public class ConsoleRunnable implements Runnable {
 	
 	public void run() {
 					
-		jsonManager.fetchData(ui.getCurrentMeasurementType());
-		jsonManager.sortData(ui.getCurrentSortType(), ui.getCurrentSortKey());
-		jsonManager.prepareOutputData();
-		ui.print(jsonManager.getOutputData());
+		try {
+			jsonManager.fetchData(ui.getCurrentMeasurementType());
+			jsonManager.sortData(ui.getCurrentSortType(), ui.getCurrentSortKey());
+			jsonManager.prepareOutputData();
+			ui.print(jsonManager.getOutputData());
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
