@@ -3,6 +3,7 @@ package monitor.console.view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.*;
 
 public class ConsoleUI extends JFrame {
 

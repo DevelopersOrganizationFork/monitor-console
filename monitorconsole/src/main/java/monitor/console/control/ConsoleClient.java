@@ -4,6 +4,7 @@ import monitor.console.view.ConsoleUI;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.io.*;
 
 public class ConsoleClient {
 
@@ -18,7 +19,14 @@ public class ConsoleClient {
 	 	ui = new ConsoleUI();
 	 	ui.setVisible(true);
 	 	
-		ConsoleRunnable runner = new ConsoleRunnable(ui);
-		executor.scheduleWithFixedDelay(runner, DEFAULT_DELAY, DEFAULT_INTERVAL,TimeUnit.SECONDS);	
+	 	try {
+	 		ConsoleRunnable runner = new ConsoleRunnable(ui);
+	 	    executor.scheduleWithFixedDelay(runner, DEFAULT_DELAY, DEFAULT_INTERVAL,TimeUnit.SECONDS);	
+	 	}
+	 	catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

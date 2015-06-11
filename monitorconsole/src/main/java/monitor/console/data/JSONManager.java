@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.*;
 import org.json.*;
 import java.net.*;
+import java.util.Properties;
 
 public class JSONManager {
 
@@ -12,24 +13,40 @@ public class JSONManager {
 	private String measurementTitle;
 	private String outputData;
 	private String currentMeasurementType;
+	private String hostN;
+	private String portNumber;
 	
 	private JSONObject jsonObject;
 	private JSONArray jsonArray;
 	private JSONArray sortedJsonArray;
 	private List<JSONObject> jsonObjectList;
+	private Properties prop = new Properties();
 	
-	public JSONManager() {
+	
+	public JSONManager() throws IOException {
 		frontSpacer = String.format("%2s", "");
 		hostNameTitle = String.format("%-30s", "Host name");
 		hostIpTitle = String.format("%-20s", "Host IP");
 		measurementTitle = String.format("%-10s", "Measurement");
+		
+		InputStream inputStream = new FileInputStream("config.properties");
+
+        if (inputStream != null) {
+            prop.load(inputStream);
+            hostN = prop.getProperty("registerHost");
+            portNumber = prop.getProperty("registerPort");
+        } else {
+            throw new FileNotFoundException("Property file not found");
+        }
 	}
 	
 	public void fetchData(String currentMeasurementType) throws IOException {
 		
 		this.currentMeasurementType = currentMeasurementType.replaceAll(" ", "").toUpperCase();
 		
-		URL url = new URL("http://localhost:18080/monitor-back/hosts/topten");
+        
+		
+		URL url = new URL(hostN + ":" + portNumber + "/monitor-back/hosts/topten");
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 		
 		String inputLine = in.readLine();
@@ -46,7 +63,7 @@ public class JSONManager {
 			String hostIp = arr.getJSONObject(i).getString("ip");
 			String hostId = arr.getJSONObject(i).getString("id");
 			
-			URL url2 = new URL("http://localhost:18080/monitor-back/hosts/" + hostId +"/measurements/" + this.currentMeasurementType);
+			URL url2 = new URL(hostN + ":" + portNumber + "/monitor-back/hosts/" + hostId +"/measurements/" + this.currentMeasurementType);
 	        BufferedReader in2 = new BufferedReader(new InputStreamReader(url2.openStream()));
 
 	        String inputLine2 = in2.readLine();

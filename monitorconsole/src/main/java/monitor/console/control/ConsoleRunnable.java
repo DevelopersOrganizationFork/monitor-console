@@ -9,7 +9,7 @@ public class ConsoleRunnable implements Runnable {
 	private ConsoleUI ui;
 	private JSONManager jsonManager;
 	 
-	public ConsoleRunnable(ConsoleUI ui) {
+	public ConsoleRunnable(ConsoleUI ui) throws IOException {
 		this.ui = ui;
 		jsonManager = new JSONManager();
 	}
